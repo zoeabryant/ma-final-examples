@@ -1,7 +1,7 @@
 require 'json'
 
 
-file = File.read('json/zoe_steps_0902.json')
+file = File.read('json/tom_20140902.json')
 data_hash = JSON.parse(file)
 
 # puts data_hash[0]['segments'][1]['activities'][0]['trackPoints']
