@@ -100,6 +100,7 @@ date = "20140902"
 date_ob = Time.new(2014, 9, 02, 0)
 
 @matches = []
+@time_line = {}
 
 def format_time time_string
 	year = time_string[0..3]
@@ -124,8 +125,8 @@ def run_and_format_time_for array
 end
 
 def relevant_time? data_time, current_time
-	# current_time <= data_time && data_time < (add_five_minutes current_time)
-	data_time == current_time
+	current_time <= data_time && data_time < (add_five_minutes current_time)
+	# data_time == current_time
 end
 
 def add_five_minutes time
@@ -141,16 +142,21 @@ def make_a_timeline_for zoe_steps, zoe_places, date
 	next_day = date + (60 * 60 * 24)
 
 	while date != next_day do
+		# hash[:item2] = 2
 
 		# puts date
 
 		# formatted_date = date.strftime "%Y%m%dT%H%M%S%z"
 		# puts formatted_date
+		@time_line[date] = []
 
 		zoe_steps.select do |step|
 			# puts floor(step[:time], 300)
 			if relevant_time?(step[:time], date)
-				@matches << step
+
+				@time_line[date] << step
+
+				# @matches << step
 			end
 		end
 
@@ -158,18 +164,25 @@ def make_a_timeline_for zoe_steps, zoe_places, date
 	end
 
 	puts '-'*20
-	puts "#{@matches.length} matches:"
-	puts
+	# puts "#{@matches.length} matches:"
+	# puts
 
-	@matches.each_with_index do |val, i|
-		puts "#{i}. #{val[:time]}"
-		puts "#{val[:lat]}, #{val[:lon]}"
+	# @matches.each_with_index do |val, i|
+	# 	puts "#{i}. #{val[:time]}"
+	# 	puts "#{val[:lat]}, #{val[:lon]}"
+	# 	puts
+	# end
+
+	# puts '-'*20
+	# puts "#{@matches.length} matches"
+	# puts
+
+	@time_line.each do |time_set, step|
 		puts
+		puts "#{time_set} #{'-' * 50}"
+		puts step
+		# puts "	#{step[:time]}: #{step[:lat]}, #{step[:lon]}"
 	end
-
-	puts '-'*20
-	puts "#{@matches.length} matches"
-	puts
 
 end
 
