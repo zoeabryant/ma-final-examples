@@ -118,14 +118,15 @@ def format_time time_string
 	Time.new(year, month, day, hour, minutes, seconds, time_zone)
 end
 
-def run_and_format_time_for array
+def format_placetime array
 	array.each do |step|
-		step[:time] = format_time(step[:time])
+		step[:start_time] = format_time(step[:start_time])
+		step[:end_time] = format_time(step[:end_time])
 	end
 end
 
-def relevant_time? data_time, current_time
-	current_time <= data_time && data_time < (add_five_minutes current_time)
+def relevant_placetime? start_time, end_time, current_time
+	current_time <= end_time && current_time >= start_time
 	# data_time == current_time
 end
 
@@ -150,11 +151,11 @@ def make_a_timeline_for zoe_steps, zoe_places, date
 		# puts formatted_date
 		@time_line[date] = []
 
-		zoe_steps.select do |step|
+		zoe_places.select do |place|
 			# puts floor(step[:time], 300)
-			if relevant_time?(step[:time], date)
+			if relevant_placetime?(place[:start_time], place[:end_time], date)
 
-				@time_line[date] << step
+				@time_line[date] << place
 
 				# @matches << step
 			end
@@ -183,12 +184,12 @@ def make_a_timeline_for zoe_steps, zoe_places, date
 		puts step
 		# puts "	#{step[:time]}: #{step[:lat]}, #{step[:lon]}"
 	end
-	puts
-	p @time_line
 
 
 end
 
-steps = run_and_format_time_for zoe_steps
+steps = format_placetime zoe_places
+
+puts steps
 
 make_a_timeline_for steps, zoe_places, date_ob
