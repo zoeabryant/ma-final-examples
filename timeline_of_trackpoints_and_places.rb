@@ -135,8 +135,18 @@ def relevant_time? data_time, current_time
 	current_time <= data_time && data_time < (add_five_minutes current_time)
 end
 
-def relevant_placetime? start_time, end_time, current_time
-	current_time <= end_time && current_time >= start_time
+def relevant_placetime? place_start_time, place_end_time, timeslot_start
+	# timeslot_start # current time slot start (9:00)
+	timeslot_end = add_five_minutes(timeslot_start) # (9:05)
+	# place_start_time # (9:01)
+	# place_end_time # (9:09)
+
+	# timeslot_start <= place_end_time 
+
+	(place_start_time >= timeslot_start && place_start_time < timeslot_end) || (place_start_time < timeslot_start && place_end_time > timeslot_start)
+
+	# && timeslot_start >= place_start_time
+	# data_time == current_time
 end
 
 
@@ -181,12 +191,10 @@ def make_a_timeline_for zoe_steps, zoe_places, date
 		puts step
 
 	end
-	puts
-	p @time_line
-
 
 end
 
 steps = run_and_format_time_for zoe_steps
+places = format_placetime zoe_places
 
-make_a_timeline_for steps, zoe_places, date_ob
+make_a_timeline_for steps, places, date_ob
