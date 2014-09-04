@@ -196,25 +196,16 @@ def make_a_timeline_for zoe_steps, zoe_places, date
 		puts step
 
 	end
-<<<<<<< HEAD
-	puts
-	p @time_line
-
-=======
 
 	puts
 	puts
 	puts @time_line
->>>>>>> master
 
 end
 
 steps = run_and_format_time_for zoe_steps
-<<<<<<< HEAD
 
-make_a_timeline_for steps, zoe_places, date_ob
-=======
 places = format_placetime zoe_places
 
 make_a_timeline_for steps, places, date_ob
->>>>>>> master
+
