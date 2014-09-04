@@ -192,6 +192,10 @@ def make_a_timeline_for zoe_steps, zoe_places, date
 
 	end
 
+	puts
+	puts
+	puts @time_line
+
 end
 
 steps = run_and_format_time_for zoe_steps
