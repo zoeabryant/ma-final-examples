@@ -125,8 +125,22 @@ def format_placetime array
 	end
 end
 
+<<<<<<< HEAD
 def relevant_placetime? start_time, end_time, current_time
 	current_time <= end_time && current_time >= start_time
+=======
+def place_timeslot? place_start_time, place_end_time, timeslot_start
+	# timeslot_start # current time slot start (9:00)
+	timeslot_end = add_five_minutes(timeslot_start) # (9:05)
+	# place_start_time # (9:01)
+	# place_end_time # (9:09)
+
+	# timeslot_start <= place_end_time 
+
+	(place_start_time >= timeslot_start && place_start_time < timeslot_end) || (place_start_time < timeslot_start && place_end_time > timeslot_start)
+
+	# && timeslot_start >= place_start_time
+>>>>>>> master
 	# data_time == current_time
 end
 
@@ -153,7 +167,11 @@ def make_a_timeline_for zoe_steps, zoe_places, date
 
 		zoe_places.select do |place|
 			# puts floor(step[:time], 300)
+<<<<<<< HEAD
 			if relevant_placetime?(place[:start_time], place[:end_time], date)
+=======
+			if place_timeslot?(place[:start_time], place[:end_time], date)
+>>>>>>> master
 
 				@time_line[date] << place
 
