@@ -95,8 +95,6 @@ zoe_places = [
 ]
 
 date = "20140902"
-# date_ob = DateTime.new(2014, 9, 02)
-# date_ob = Date.new(2014, 9, 02)
 date_ob = Time.new(2014, 9, 02, 0)
 
 @matches = []
@@ -125,13 +123,6 @@ def run_and_format_time_for array
 	end
 end
 
-def relevant_time? data_time, current_time
-	current_time <= data_time && data_time < (add_five_minutes current_time)
-	# data_time == current_time
-end
-
-
-
 def format_placetime array
 	array.each do |step|
 		step[:start_time] = format_time(step[:start_time])
@@ -139,43 +130,37 @@ def format_placetime array
 	end
 end
 
+
+def relevant_time? data_time, current_time
+	current_time <= data_time && data_time < (add_five_minutes current_time)
+end
+
+<<<<<<< HEAD
 def relevant_placetime? start_time, end_time, current_time
 	current_time <= end_time && current_time >= start_time
+=======
+def relevant_placetime? place_start_time, place_end_time, timeslot_start
+	# timeslot_start # current time slot start (9:00)
+	timeslot_end = add_five_minutes(timeslot_start) # (9:05)
+	# place_start_time # (9:01)
+	# place_end_time # (9:09)
+
+	# timeslot_start <= place_end_time 
+
+	(place_start_time >= timeslot_start && place_start_time < timeslot_end) || (place_start_time < timeslot_start && place_end_time > timeslot_start)
+
+	# && timeslot_start >= place_start_time
 	# data_time == current_time
+>>>>>>> master
 end
+
 
 def add_five_minutes time
 	time + 300
 end
 
 
-def steps_to_timeline zoe_steps, date
-
-	next_day = date + (60 * 60 * 24)
-
-	while date != next_day do
-
-		zoe_steps.select do |step|
-
-			if relevant_time?(step[:time], date)
-
-				@time_line[date] << step
-
-			end
-		end
-
-		date = add_five_minutes date
-	end
-
-	puts '-'*20
-
-
-end
-
-
-
-
-def places_to_timeline zoe_steps, date
+def make_a_timeline_for zoe_steps, zoe_places, date
 
 	next_day = date + (60 * 60 * 24)
 
@@ -183,8 +168,16 @@ def places_to_timeline zoe_steps, date
 		
 		@time_line[date] = []
 
-		zoe_places.select do |place|
+		zoe_steps.select do |step|
+			
+			if relevant_time?(step[:time], date)
 
+				@time_line[date] << step
+
+			end
+		end
+
+		zoe_places.select do |place|
 			if relevant_placetime?(place[:start_time], place[:end_time], date)
 
 				@time_line[date] << place
@@ -201,13 +194,18 @@ def places_to_timeline zoe_steps, date
 		puts
 		puts "#{time_set} #{'-' * 50}"
 		puts step
-		# puts "	#{step[:time]}: #{step[:lat]}, #{step[:lon]}"
+
 	end
 
+	puts
+	puts
+	puts @time_line
 
 end
 
-steps = format_placetime zoe_places
+steps = run_and_format_time_for zoe_steps
 
-places_to_timeline, zoe_places, date_ob
-steps_to_timeline, zoe_steps, date_ob
+places = format_placetime zoe_places
+
+make_a_timeline_for steps, places, date_ob
+
