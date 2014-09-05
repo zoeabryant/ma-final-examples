@@ -1,4 +1,5 @@
-require 'geo-distance'
+
+require './compare_two_timelines'
 
 user1 = [
 	{"lat"=>51.5165629097, "lon"=>-0.1954945875, "time"=>"20140831T124015+0100"},
@@ -156,13 +157,30 @@ zoe_steps = [
 @bumps = []
 @distances = []
 
-def distance_between lat1, lon1, lat2, lon2
-	dist = GeoDistance::Haversine.geo_distance( lat1, lon1, lat2, lon2 )
-	# puts "the distance from  #{lat1}, #{lon1} to #{lat2}, #{lon2} is: #{dist.meters} meters"
+include Math
+	 
+	R = 6367.45  # radius of the Earth, in kilometers
 
-	@distances << dist.meters
-	dist.meters
-end
+	def deg2rad(lat, lon) # converts degrees to radians
+	  [lat * PI / 180, lon * PI / 180]
+	end
+	 
+	def distance_between(lat1, lon1, lat2, lon2)
+	  radlat1, radlon1 = deg2rad(lat1, lon1)
+	  radlat2, radlon2 = deg2rad(lat2, lon2)
+	  2 * R * asin(sqrt(sin((radlat2-radlat1)/2)**2 + cos(radlat1) * cos(radlat2) * sin((radlon2 - radlon1)/2)**2)) # Haversine formula
+	end
+
+
+
+# def distance_between lat1, lon1, lat2, lon2
+# 	dist = GeoDistance::Haversine.geo_distance( lat1, lon1, lat2, lon2 )
+# 	# puts "the distance from  #{lat1}, #{lon1} to #{lat2}, #{lon2} is: #{dist.meters} meters"
+
+# 	@distances << dist.meters
+# 	dist.meters
+# end
+
 
 def format_time time_string
 	year = time_string[0..3]
@@ -268,6 +286,7 @@ def compare user1, user2
 	summary user1, user2, count, start_time
 
 end
+
 
 # compare user1, user2
 compare tom_steps, zoe_steps
