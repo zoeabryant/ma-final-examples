@@ -259,6 +259,8 @@ def compare timeline1, timeline2
 
 	start_time = Time.now
 
+	count = 0
+
 	timeline1.each do | timeslot |
 
 		timeslot[1].flatten.each do |position|
@@ -287,6 +289,8 @@ def compare timeline1, timeline2
 				end
 
 		end
+
+		count = count + 1
 
 
 	end
@@ -347,9 +351,10 @@ def time_between u1_time, u2_time
 end
 
 def did_they_bump? distance_between, time_between
-	max_distance = 10 #m
-	max_time = 40000.0 #seconds
-	distance_between < max_distance && time_between < max_time
+	outer_limit = 15 #m
+	inner_limit = 5
+	max_time = 300.0 #seconds
+	(distance_between < outer_limit && distance_between > inner_limit) && time_between < max_time
 end
 
 def save_bump distance_between, time_between
