@@ -1,4 +1,4 @@
-Briefly
+Team Mist - Makers Academy Final Project code exploration
 =================
 
 This is sample code to help with our final project at Makers Academy.
@@ -19,6 +19,7 @@ This repo is where we worked out how to compute the main engine behind mist. In 
 * Determine if they were in close proximity to each other at any point, considering both time and location.
 
 ###Technology
+
 *JSON
 *Ruby
 
