@@ -20,8 +20,8 @@ This repo is where we worked out how to compute the main engine behind mist. In 
 
 ###Technology
 
-*JSON
-*Ruby
+* JSON
+* Ruby
 
 ###Solutions
 **In order to know where our users were at what time**, we decided to use [Moves API/App](https://www.moves-app.com/) to track their movements. We explored how to do it ourselves [here](https://github.com/zoeabryant/ma-geolocation-js-only) but found it to be impractical. This repo uses the JSON output of a moves API request.
