@@ -5,7 +5,7 @@ This is sample code to help with our final project at Makers Academy.
 
 Our final project is **Mist**: an app that informs users as to whom they almost bumped in to on the previous day. The final code is located [here](https://github.com/HanWax/so_close)
 
-**None of this code is test driven**. The code in this repo is purely exploratory.
+**None of this code is test driven**. The code in this repo is purely exploratory. It [reeks](https://github.com/joenas/preek).
 
 ###Objectives
 To explore potential solutions for logical problems we faced in the process of making Mist.
